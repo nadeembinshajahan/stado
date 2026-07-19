@@ -1,0 +1,52 @@
+# go2rtc — pulls the drone RTSP (SIYI) and republishes it for the browser.
+# RTSP_URL is read from the environment (see relay/run.sh, which sources backend/.env).
+#
+# IMPORTANT: the SIYI "main.264" stream is actually H.265 / HEVC (confirmed via
+# ffprobe: hevc Main, 1280x720, 30fps). QGC plays HEVC natively, but browsers
+# CANNOT do HEVC over WebRTC — so we must transcode HEVC → H.264 here.
+
+api:
+  listen: ":1984"
+  origin: "*" # allow the Vite dev origin (localhost:5180) to open the WebRTC WS
+
+rtsp:
+  listen: ":8554" # go2rtc's own RTSP server — the transcode below pushes H.264
+                  # here. Bonus: QGC can read rtsp://<this-mac>:8554/drone too, so
+                  # the camera is pulled ONCE and feeds both the GCS and QGC
+                  # (avoids two concurrent camera sessions stealing bandwidth).
+
+webrtc:
+  listen: ":8555" # UDP/TCP for WebRTC media
+  candidates:
+    - 127.0.0.1:8555
+
+log:
+  level: info
+
+streams:
+  # HEVC → H.264 transcode. Notes on the flag choices (this source is lossy /
+  # long-GOP HEVC, which made the default hardware decoder wedge with
+  # "Could not find ref with POC" and emit zero frames):
+  #   -fflags +genpts+discardcorrupt  drop corrupt packets instead of stalling
+  #   (software HEVC decode — no -hwaccel — is far more tolerant of the stream)
+  #   -c:v h264_videotoolbox          hardware H.264 ENCODE (cheap on Apple silicon)
+  #   -g 30 -bf 0                     1s keyframes, no B-frames → fast, low-latency
+  #                                   WebRTC start; browser gets a keyframe quickly
+  #   -rtsp_transport tcp             reliable delivery (UDP loses keyframes here)
+  drone:
+    - exec:ffmpeg -hide_banner -loglevel warning -fflags +genpts+discardcorrupt -flags low_delay -rtsp_transport tcp -i ${RTSP_URL} -an -c:v h264_videotoolbox -realtime 1 -g 30 -bf 0 -pix_fmt yuv420p -f rtsp -rtsp_transport tcp {output}
+
+    # Fallback (comment the line above, uncomment this) if VideoToolbox misbehaves
+    # on this content — full software encode, still tolerant of the lossy HEVC:
+    # - exec:ffmpeg -hide_banner -loglevel warning -fflags +genpts+discardcorrupt -flags low_delay -rtsp_transport tcp -i ${RTSP_URL} -an -c:v libx264 -preset ultrafast -tune zerolatency -g 30 -bf 0 -pix_fmt yuv420p -f rtsp -rtsp_transport tcp {output}
+
+  # ── Outrider (Jetson) ──────────────────────────────────────────────────────
+  # Outrider's video is H.264 in MPEG-TS over UDP on :5600 — the VIO pipeline's
+  # `oakd_tracker` rgb_udp_streamer (`mpegts_udp` transport). The Jetson PUSHES
+  # to this Mac:5600; ffmpeg here binds/listens on that port. The VIO encodes
+  # H.264 *High 4:4:4 Predictive / yuv444p*, which browsers CANNOT decode over
+  # WebRTC — so we TRANSCODE to VideoToolbox H.264 yuv420p (browser-safe), same
+  # as `drone`. (exec: sources must live in this config — go2rtc refuses exec
+  # producers added via the API.)
+  outrider:
+    - exec:ffmpeg -hide_banner -loglevel warning -fflags +genpts+discardcorrupt -i udp://@:5600?overrun_nonfatal=1&fifo_size=5000000 -an -c:v h264_videotoolbox -realtime 1 -g 30 -bf 0 -pix_fmt yuv420p -f rtsp -rtsp_transport tcp {output}

@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #05070b;
+  --color-panel: #0b0f17;
+  --color-edge: #1b2433;
+  --color-accent: #22e3c4;
+  --color-accent-dim: #0e8e7e;
+  --color-warn: #ffb020;
+  --color-danger: #ff4d5e;
+  --color-ok: #3ddc84;
+  --font-mono: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: var(--color-ink);
+  color: #e7edf5;
+  font-family:
+    "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Mobile viewport: dvh accounts for Safari's collapsing URL bar so the bottom
+   sheet + PTT FAB never end up under the chrome. Desktop layout is untouched. */
+@media (max-width: 767px) {
+  html,
+  body,
+  #root {
+    /* dvh — dynamic viewport height — so the cockpit reclaims the URL-bar area
+       as soon as the user scrolls / it auto-hides. Falls back to 100vh on
+       browsers that don't grok dvh. */
+    height: 100vh;
+    height: 100dvh;
+  }
+  /* Defeat iOS Safari's tap-highlight rectangle on every interactive surface — it
+     looks awful on the dark theme. */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Touch-target shim for coarse pointers (touchscreens, including tablets that
+   still render the desktop layout). Buttons that opt in via the `.tap` class
+   get a guaranteed 44pt minimum hit area. */
+@media (pointer: coarse) {
+  .tap {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Safe-area utility classes for the mobile shell. Pads with `env(safe-area-
+   inset-*)` so the iPhone notch + home indicator never eat the layout. */
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.safe-x {
+  padding-left: env(safe-area-inset-left, 0);
+  padding-right: env(safe-area-inset-right, 0);
+}
+
+/* Frosted-glass panel used across the HUD. */
+.glass {
+  background: linear-gradient(
+    180deg,
+    rgba(16, 22, 33, 0.82),
+    rgba(8, 11, 17, 0.78)
+  );
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(80, 110, 150, 0.18);
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.glow-accent {
+  box-shadow: 0 0 0 1px rgba(34, 227, 196, 0.35),
+    0 0 22px rgba(34, 227, 196, 0.28);
+}
+
+.tnum {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* subtle scanline + vignette to make it feel like an instrument */
+.instrument::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 120% at 50% 0%,
+    transparent 60%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(34, 227, 196, 0.5); }
+  70% { box-shadow: 0 0 0 10px rgba(34, 227, 196, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 227, 196, 0); }
+}
+.pulse {
+  animation: pulse-ring 2s infinite;
+}
+
+/* Critical/alert readout: smooth red pulse with a glowing halo. */
+@keyframes hud-critical-pulse {
+  0%, 100% {
+    color: #ff8a94;
+    text-shadow: 0 0 4px rgba(255, 77, 94, 0.55), 0 0 10px rgba(255, 77, 94, 0.3);
+  }
+  50% {
+    color: #ff4d5e;
+    text-shadow: 0 0 8px rgba(255, 77, 94, 0.95), 0 0 20px rgba(255, 77, 94, 0.6);
+  }
+}
+.hud-critical {
+  color: #ff4d5e;
+  animation: hud-critical-pulse 1.4s ease-in-out infinite;
+}
+.hud-critical-urgent {
+  animation-duration: 0.7s;
+}
+
+/* Telemetry-stale badge: a compact, NON-blocking amber pill overlaid on a feed
+   whose video is STILL playing (WebRTC media is live) but whose telemetry link
+   has wedged/dropped. It must never obscure the live frame — just a steady,
+   gently-breathing warning so the operator keeps eyes on the picture. */
+@keyframes stale-badge-pulse {
+  0%, 100% { opacity: 0.78; box-shadow: 0 0 0 0 rgba(255, 176, 32, 0); }
+  50% { opacity: 1; box-shadow: 0 0 10px 0 rgba(255, 176, 32, 0.45); }
+}
+.stale-badge {
+  animation: stale-badge-pulse 1.8s ease-in-out infinite;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--color-edge); border-radius: 8px; }

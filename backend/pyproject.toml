@@ -1,0 +1,38 @@
+[project]
+name = "gcs-backend"
+version = "0.1.0"
+description = "Ground Control Station backend — MAVLink, vision, voice, missions"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pymavlink>=2.4.42",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "python-multipart>=0.0.12",
+    "numpy>=1.26",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+# Installed on demand for the vision pipeline (heavier deps).
+vision = [
+    "opencv-python>=4.10",
+    "ultralytics>=8.3",
+]
+# Installed on demand for the Qwen model surface.
+# websockets: native Qwen Realtime WebSocket client for the voice session
+#   (wss://…aliyuncs.com/api-ws/v1/realtime, Alibaba Cloud Model Studio).
+# openai: Qwen chat completions (vision grounding, survey perimeters,
+#   mission reports) via the OpenAI-compatible Model Studio endpoint.
+voice = [
+    "websockets>=12",
+    "openai>=1.40",
+]
+# Test suite (pytest; runs fully offline with hardware/vision/voice mocked).
+test = [
+    "pytest>=8",
+]
+
+[tool.uv]
+package = false

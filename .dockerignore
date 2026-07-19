@@ -1,0 +1,37 @@
+# Secrets must never reach the build context.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Heavy / generated trees.
+node_modules
+**/node_modules
+dist
+**/dist
+.venv
+**/.venv
+__pycache__
+**/__pycache__
+*.pyc
+
+# Repo noise irrelevant to the image.
+.git
+.gitignore
+logs
+**/logs
+recordings
+experiments
+*.log
+.DS_Store
+README.md
+ARCHITECTURE.md
+HACKATHON.md
+VIDEO_SCRIPT.md
+alibaba
+
+# Vision model weights — lazy-loaded by live tracking only; the SITL demo has
+# no camera, so keep ~120 MB out of the image.
+*.pt
+relay/go2rtc

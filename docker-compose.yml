@@ -1,0 +1,18 @@
+# Local reproduction of the demo container.
+#
+#   cp .env.example .env   # set DASHSCOPE_API_KEY (+ VITE_GOOGLE_MAPS_API_KEY)
+#   docker compose up --build
+#   open http://localhost:8080   (wait ~60 s for both SITL drones to link)
+services:
+  stado-qwen:
+    build:
+      context: .
+      args:
+        VITE_GOOGLE_MAPS_API_KEY: ${VITE_GOOGLE_MAPS_API_KEY:-}
+        VITE_GOOGLE_MAPS_MAP_ID: ${VITE_GOOGLE_MAPS_MAP_ID:-}
+    image: stado-qwen:latest
+    platform: linux/amd64   # PX4 SITL base image is amd64-only
+    env_file: .env
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

@@ -1,0 +1,42 @@
+# ── Secrets — NEVER commit ───────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# ── Node / frontend ──────────────────────────────────────────────────────────
+node_modules/
+dist/
+*.tsbuildinfo
+
+# ── Runtime artifacts ────────────────────────────────────────────────────────
+logs/
+recordings/
+*.log
+*.ulg
+
+# ── Local experiment outputs ─────────────────────────────────────────────────
+experiments/*.wav
+experiments/*.aiff
+experiments/*.pcm
+
+# ── OS noise ─────────────────────────────────────────────────────────────────
+.DS_Store
+
+# ── Binary blobs excluded from the public repo ───────────────────────────────
+# Vision model weights (lazy-loaded by the tracking pipeline; unused in the
+# SITL demo — download from ultralytics / MobileSAM if you want live tracking).
+*.pt
+# go2rtc is a per-platform binary; fetch the right build from
+# https://github.com/AlexxIT/go2rtc/releases (unused in the SITL demo).
+relay/go2rtc
