@@ -24,7 +24,7 @@ const MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID as string | undefined;
 // maps3d (Photorealistic 3D) ships in the stable channel, so no version
 // override is needed (avoids the alpha/beta "development only" banner).
 const GMAPS_VERSION = import.meta.env.VITE_GMAPS_VERSION;
-const FALLBACK_CENTER = { lat: 13.078065, lng: 77.644651 } /* DEMO: SITL spawn */;
+const FALLBACK_CENTER = { lat: 25.35338, lng: 55.38043 } /* DEMO: SITL spawn (Ajman, UAE) */;
 
 /**
  * Pans the map to the operator's location once, shortly after load — WITHOUT

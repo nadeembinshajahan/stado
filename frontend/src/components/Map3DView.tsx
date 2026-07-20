@@ -119,8 +119,8 @@ export default function Map3DView() {
     // high-elevation site (e.g. Bengaluru ~900 m) aimed the camera ~900 m
     // underground, which the tilt projected into a ~300 m horizontal offset.
     const start = {
-      lat: telem.lat ?? homePos?.lat ?? 13.078065 /* DEMO */,
-      lng: telem.lon ?? homePos?.lng ?? 77.644651,
+      lat: telem.lat ?? homePos?.lat ?? 25.35338 /* DEMO: Ajman, UAE */,
+      lng: telem.lon ?? homePos?.lng ?? 55.38043,
       altitude: Math.max(telem.alt_rel ?? 0, 1),
     };
     const camCenter = { lat: start.lat, lng: start.lng, altitude: telem.alt_msl ?? telem.alt_rel ?? 0 };
