@@ -187,6 +187,22 @@ async def qwen_voice_session(ws: WebSocket, manual_vad: bool = True) -> None:
         # follow-up so the model actually speaks the tool outcome. (Qwen does not
         # auto-continue after a tool.)
         response_has_tool = False
+        # True if the model spoke any transcript this response (used to detect
+        # "narrated but did nothing" — realtime speech models drift into that).
+        response_had_speech = False
+        # We nudge at most ONCE per user turn: if the model narrates an action
+        # without firing a tool, we inject "execute the tool now" and re-ask.
+        # Reset on activity_start (barge-in / new PTT press).
+        nudged_this_turn = False
+        # Common action-shape substrings in the transcript — if any appear AND
+        # no tool was called, we treat it as a narration-instead-of-action.
+        # Kept broad on purpose (regex-free, case-insensitive substring match).
+        NARRATION_MARKERS = (
+            "climbing", "lifting off", "taking off", "going to", "en route",
+            "proceeding", "heading to", "orbiting", "initiating orbit",
+            "moving to", "turning to", "returning to", "landing at",
+            "will initiate", "will begin", "will proceed", "starting orbit",
+        )
         # Bytes appended to the audio buffer since the last clear/commit. Guards
         # activity_end from committing an empty buffer (Qwen's minimum is roughly
         # one 100 ms frame, ~3200 bytes at PCM16@16kHz mono; a tap-and-release
@@ -224,6 +240,8 @@ async def qwen_voice_session(ws: WebSocket, manual_vad: bool = True) -> None:
                                     response_active.clear()
                                 await send({"type": "input_audio_buffer.clear"})
                                 audio_bytes_since_clear = 0
+                                # Fresh user turn — allow one nudge again.
+                                nudged_this_turn = False
                         elif text == '{"type":"activity_end"}':
                             if manual_vad:
                                 if audio_bytes_since_clear >= MIN_COMMIT_BYTES:
@@ -259,8 +277,11 @@ async def qwen_voice_session(ws: WebSocket, manual_vad: bool = True) -> None:
                 pass
 
         async def qwen_to_browser() -> None:
-            nonlocal response_has_tool
+            nonlocal response_has_tool, response_had_speech, nudged_this_turn
             import websockets
+            # Accumulate the current response's transcript so we can inspect it at
+            # response.done for the "narrated but did nothing" pattern.
+            current_transcript_parts: list[str] = []
 
             while True:
                 try:
@@ -275,6 +296,8 @@ async def qwen_voice_session(ws: WebSocket, manual_vad: bool = True) -> None:
                     await ws.send_bytes(base64.b64decode(ev["delta"]))
                 elif et == "response.audio_transcript.delta":
                     if ev.get("delta"):
+                        response_had_speech = True
+                        current_transcript_parts.append(ev["delta"])
                         await ws.send_json({"type": "said", "text": ev["delta"]})
                 elif et == "conversation.item.input_audio_transcription.completed":
                     if ev.get("transcript"):
@@ -314,10 +337,41 @@ async def qwen_voice_session(ws: WebSocket, manual_vad: bool = True) -> None:
                     })
                 elif et == "response.done":
                     response_active.clear()
-                    # If this response carried a tool call, the model owes us a
-                    # spoken outcome — kick off the follow-up response now.
-                    if response_has_tool:
-                        response_has_tool = False
+                    # Snapshot + reset per-response flags before we possibly
+                    # kick off the follow-up (which reuses the same variables).
+                    had_tool = response_has_tool
+                    had_speech = response_had_speech
+                    transcript = "".join(current_transcript_parts).lower()
+                    response_has_tool = False
+                    response_had_speech = False
+                    current_transcript_parts = []
+
+                    if had_tool:
+                        # The model must speak the outcome — Qwen does not
+                        # auto-continue after a tool result.
+                        await request_response()
+                    elif (
+                        had_speech
+                        and not nudged_this_turn
+                        and any(m in transcript for m in NARRATION_MARKERS)
+                    ):
+                        # "Narrated but did nothing" — realtime speech models
+                        # drift into describing actions instead of firing tools.
+                        # Inject a system-role nudge and re-ask ONCE per turn.
+                        nudged_this_turn = True
+                        log.info("qwen realtime: narration-without-tool detected — nudging")
+                        await send({
+                            "type": "conversation.item.create",
+                            "item": {
+                                "type": "message",
+                                "role": "system",
+                                "content": [{"type": "input_text", "text": (
+                                    "You just described an action but did NOT call the "
+                                    "matching tool. Execute NOW by emitting the tool_call. "
+                                    "Do not describe what you would do — call the function."
+                                )}],
+                            },
+                        })
                         await request_response()
                 elif et == "error":
                     err = ev.get("error", ev)
