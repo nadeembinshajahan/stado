@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  BatteryFull, BatteryLow, BatteryMedium, Box, ClipboardList, Lock, Satellite,
-  ShieldCheck, ShieldOff, Wifi, WifiOff,
+  BatteryFull, BatteryLow, BatteryMedium, Box, ClipboardList, Lock,
+  RotateCcw, Satellite, ShieldCheck, ShieldOff, Wifi, WifiOff,
 } from "lucide-react";
+import { api } from "../lib/api";
 import { EMPTY, useGcs } from "../store/useGcs";
 import type { Telemetry } from "../lib/types";
 import HelpButton from "./demo/HelpButton";
@@ -124,6 +125,74 @@ function DroneChip({ name, color, t }: { name: string; color: string; t: Telemet
   );
 }
 
+
+/** Demo-only "Reset Sim" pill. Hard-restarts the SITL container by asking the
+ * backend to signal PID 1; Docker's restart policy respawns in ≈60 s. Shows a
+ * live countdown while waiting, then reloads the page. Confirm-guarded so a
+ * stray click during a demo doesn't kill an in-progress take. */
+function ResetSimPill() {
+  const [phase, setPhase] = useState<"idle" | "confirm" | "waiting">("idle");
+  const [remain, setRemain] = useState(60);
+  useEffect(() => {
+    if (phase !== "waiting") return;
+    const t = setInterval(() => setRemain((s) => Math.max(0, s - 1)), 1000);
+    return () => clearInterval(t);
+  }, [phase]);
+  useEffect(() => {
+    if (phase === "waiting" && remain === 0) window.location.reload();
+  }, [phase, remain]);
+  const trigger = async () => {
+    try {
+      await api.resetSim();
+      setPhase("waiting");
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error("reset sim failed:", e);
+      setPhase("idle");
+    }
+  };
+  if (phase === "waiting") {
+    return (
+      <div
+        className="flex items-center gap-1.5 rounded-md bg-warn/25 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-warn"
+        title="SITL is restarting — page will reload automatically"
+      >
+        <RotateCcw size={12} className="animate-spin" />
+        <span>reset · {remain}s</span>
+      </div>
+    );
+  }
+  if (phase === "confirm") {
+    return (
+      <div className="flex items-center gap-1">
+        <button
+          onClick={trigger}
+          className="rounded-md bg-danger/30 px-2 py-1 text-[10px] font-bold text-danger hover:bg-danger/50"
+        >
+          confirm reset
+        </button>
+        <button
+          onClick={() => setPhase("idle")}
+          className="rounded-md bg-edge/40 px-2 py-1 text-[10px] font-semibold text-slate-300 hover:bg-edge/60"
+        >
+          cancel
+        </button>
+      </div>
+    );
+  }
+  return (
+    <button
+      onClick={() => setPhase("confirm")}
+      title="Restart the SITL container — drones back at spawn, all state cleared (~60 s)"
+      className="flex items-center gap-1.5 rounded-md bg-edge/40 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-300 transition-colors hover:bg-warn/25 hover:text-warn"
+    >
+      <RotateCcw size={12} />
+      <span>reset sim</span>
+    </button>
+  );
+}
+
+
 export default function StatusBar() {
   const { telem, socketOpen, view3d, toggle3d, setReportOpen } = useGcs();
   const fleetTelem = useGcs((s) => s.fleetTelem);
@@ -200,6 +269,11 @@ export default function StatusBar() {
           ))}
         </div>
       )}
+
+      {/* Demo Reset — hard-restart the SITL container for a clean take. */}
+      <div className="border-l border-edge/60 pl-3">
+        <ResetSimPill />
+      </div>
 
       <div className="flex-1" />
 

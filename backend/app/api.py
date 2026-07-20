@@ -192,6 +192,32 @@ async def clear_max_altitude():
     return {"ok": True, "max_altitude_m": None}
 
 
+# ── demo: reset the SITL to a clean state ──────────────────────────────────
+# For a public demo, judges/reviewers accumulate state during a session
+# (drones airborne, coordination loops running, etc.). This endpoint hard-
+# resets by asking PID 1 (the container entrypoint) to exit — Docker's
+# `--restart unless-stopped` policy respawns the container from scratch,
+# giving fresh PX4 SITL processes at the configured spawn coords in ≈60 s.
+# Frontend triggers via the "Reset Sim" button in the status bar; caller
+# should show a spinner and reload the page after the wait.
+@router.post("/sim/reset")
+async def reset_sim():
+    """Restart the SITL container. Returns immediately; PID 1 dies ~1 s later."""
+    import subprocess
+    # Detached subprocess so the response makes it back to the browser BEFORE
+    # PID 1 dies. `kill -TERM 1` triggers a clean container exit → docker
+    # restart-policy respawn → fresh SITL boot.
+    subprocess.Popen(
+        ["bash", "-c", "sleep 1 && kill -TERM 1"],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+    )
+    return {
+        "ok": True,
+        "message": "Restarting SITL — reload the page in about 60 seconds.",
+        "downtime_s": 60,
+    }
+
+
 # ── safety: per-vehicle Ready-for-Flight gate ────────────────────────────────
 # The gate is OFF at startup for every vehicle. While OFF, no flight-authorizing
 # command (arm/takeoff/goto/orbit/mode/…) can be sent from ANY source. Recovery

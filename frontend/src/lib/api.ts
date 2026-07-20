@@ -143,6 +143,10 @@ export const api = {
     return res.json() as Promise<{ ok: true; vehicle: string; ready: boolean; locked: boolean }>;
   },
 
+  // Demo reset — hard-restarts the SITL container. ~60 s of downtime before
+  // the backend answers again. Frontend should show a countdown + auto-reload.
+  resetSim: () => post("/sim/reset") as Promise<{ ok: true; downtime_s: number; message: string }>,
+
   flights: () => fetch("/api/flights").then((r) => r.json()) as Promise<FlightSummary[]>,
   flight: (id: string) =>
     fetch(`/api/flights/${id}`).then((r) => {
