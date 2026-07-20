@@ -40,3 +40,7 @@ experiments/*.pcm
 # go2rtc is a per-platform binary; fetch the right build from
 # https://github.com/AlexxIT/go2rtc/releases (unused in the SITL demo).
 relay/go2rtc
+
+# submission drafts — never commit
+DEVPOST_SUBMISSION.md
+VIDEO_SCRIPT.md
