@@ -177,7 +177,16 @@ async def qwen_voice_session(ws: WebSocket, manual_vad: bool = True) -> None:
         await ws.send_json({"type": "ready", "model": cfg["model"]})
 
         # True while the model owes us a reply — guards duplicate response.create.
+        # Cleared only when the server emits `response.done` (source of truth) or
+        # when we successfully send `response.cancel`. Never speculatively cleared:
+        # doing so races the server and produces
+        # "Conversation already has an active response" errors on the next create.
         response_active = asyncio.Event()
+        # True if the current response contained at least one tool call — after
+        # response.done fires for a tool-carrying response, we auto-create the
+        # follow-up so the model actually speaks the tool outcome. (Qwen does not
+        # auto-continue after a tool.)
+        response_has_tool = False
         # Bytes appended to the audio buffer since the last clear/commit. Guards
         # activity_end from committing an empty buffer (Qwen's minimum is roughly
         # one 100 ms frame, ~3200 bytes at PCM16@16kHz mono; a tap-and-release
@@ -220,7 +229,9 @@ async def qwen_voice_session(ws: WebSocket, manual_vad: bool = True) -> None:
                                 if audio_bytes_since_clear >= MIN_COMMIT_BYTES:
                                     await send({"type": "input_audio_buffer.commit"})
                                     audio_bytes_since_clear = 0
-                                    response_active.clear()
+                                    # request_response is a no-op if a response is
+                                    # still active — that's fine, response.done
+                                    # will fire it after the current one closes.
                                     await request_response()
                                 else:
                                     # Too-short PTT — silently drop instead of
@@ -248,6 +259,7 @@ async def qwen_voice_session(ws: WebSocket, manual_vad: bool = True) -> None:
                 pass
 
         async def qwen_to_browser() -> None:
+            nonlocal response_has_tool
             import websockets
 
             while True:
@@ -284,10 +296,11 @@ async def qwen_voice_session(ws: WebSocket, manual_vad: bool = True) -> None:
                             "output": json.dumps(result),
                         },
                     })
-                    # The model must speak the outcome — ask for the follow-up
-                    # turn explicitly (Qwen does not auto-continue after a tool).
-                    response_active.clear()
-                    await request_response()
+                    # Flag that this response carried a tool — after the server's
+                    # response.done, we auto-create the follow-up so the model
+                    # speaks the outcome. Do NOT speculatively clear response_active
+                    # here (races the server → "already has an active response").
+                    response_has_tool = True
                     await ws.send_json({"type": "tool_result", "name": name, "result": result})
                     # Attribute the action to the right vehicle for the flight
                     # recorder — explicit `vehicle` arg, else the active drone.
@@ -301,6 +314,11 @@ async def qwen_voice_session(ws: WebSocket, manual_vad: bool = True) -> None:
                     })
                 elif et == "response.done":
                     response_active.clear()
+                    # If this response carried a tool call, the model owes us a
+                    # spoken outcome — kick off the follow-up response now.
+                    if response_has_tool:
+                        response_has_tool = False
+                        await request_response()
                 elif et == "error":
                     err = ev.get("error", ev)
                     log.warning("qwen realtime error event: %s", err)
