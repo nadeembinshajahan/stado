@@ -106,6 +106,8 @@ Local dev against a running SITL: `./run.sh` (backend :8000 + Vite :5180).
 
 ## Architecture
 
+![STADO×Qwen system architecture](architecture.png)
+
 See [ARCHITECTURE.md](ARCHITECTURE.md) for the full diagram — including how
 the same agent layer drives real hardware in the field (Jetson edge compute
 with onboard VIO + tracking, cloud model for intent), which is the

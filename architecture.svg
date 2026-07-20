@@ -1,0 +1,309 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="aTeal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#22e3c4"/>
+    </marker>
+    <marker id="aSlate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+    <marker id="aTealDim" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#17a08d"/>
+    </marker>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.1" fill="#111b2a"/>
+    </pattern>
+
+    <!-- glyphs, 40x40 design box -->
+    <g id="ic-cloud" fill="#cdd9e5">
+      <circle cx="12" cy="21" r="7.5"/><circle cx="22" cy="15" r="9.5"/><circle cx="31" cy="21" r="7"/>
+      <rect x="12" y="17" width="19" height="11" rx="2"/>
+    </g>
+    <g id="ic-headset" fill="none" stroke="#cdd9e5" stroke-width="3" stroke-linecap="round">
+      <path d="M8,22 a12,12 0 0 1 24,0"/>
+      <rect x="6" y="20" width="6" height="11" rx="2.5" fill="#cdd9e5" stroke="none"/>
+      <rect x="28" y="20" width="6" height="11" rx="2.5" fill="#cdd9e5" stroke="none"/>
+      <path d="M31,31 q0,7 -9,7" stroke-width="2.5"/>
+    </g>
+    <g id="ic-hexa" stroke="#cdd9e5" fill="none" stroke-width="2.4">
+      <circle cx="20" cy="20" r="4.5" fill="#cdd9e5" stroke="none"/>
+      <line x1="20" y1="20" x2="33" y2="20"/><line x1="20" y1="20" x2="26.5" y2="31.3"/>
+      <line x1="20" y1="20" x2="13.5" y2="31.3"/><line x1="20" y1="20" x2="7" y2="20"/>
+      <line x1="20" y1="20" x2="13.5" y2="8.7"/><line x1="20" y1="20" x2="26.5" y2="8.7"/>
+      <circle cx="35" cy="20" r="3.6"/><circle cx="27.5" cy="33" r="3.6"/><circle cx="12.5" cy="33" r="3.6"/>
+      <circle cx="5" cy="20" r="3.6"/><circle cx="12.5" cy="7" r="3.6"/><circle cx="27.5" cy="7" r="3.6"/>
+    </g>
+    <g id="ic-quad" stroke="#cdd9e5" fill="none" stroke-width="2.4">
+      <rect x="15" y="16.5" width="10" height="7" rx="2.5" fill="#cdd9e5" stroke="none"/>
+      <line x1="20" y1="20" x2="31" y2="9"/><line x1="20" y1="20" x2="31" y2="31"/>
+      <line x1="20" y1="20" x2="9" y2="31"/><line x1="20" y1="20" x2="9" y2="9"/>
+      <circle cx="32.5" cy="7.5" r="4"/><circle cx="32.5" cy="32.5" r="4"/>
+      <circle cx="7.5" cy="32.5" r="4"/><circle cx="7.5" cy="7.5" r="4"/>
+    </g>
+    <g id="ic-mic" fill="#22e3c4" stroke="#22e3c4">
+      <rect x="15" y="3" width="10" height="17" rx="5" stroke="none"/>
+      <path d="M10,14 a10,10 0 0 0 20,0" fill="none" stroke-width="2.6" stroke-linecap="round"/>
+      <line x1="20" y1="24" x2="20" y2="31" stroke-width="2.6" stroke-linecap="round"/>
+      <line x1="13" y1="31" x2="27" y2="31" stroke-width="2.6" stroke-linecap="round"/>
+    </g>
+    <g id="ic-speaker" fill="#22e3c4" stroke="#22e3c4">
+      <path d="M6,15 h6 l9,-8 v26 l-9,-8 h-6 z" stroke="none"/>
+      <path d="M26,13 a10,10 0 0 1 0,14" fill="none" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M30.5,8.5 a16,16 0 0 1 0,23" fill="none" stroke-width="2.6" stroke-linecap="round"/>
+    </g>
+    <g id="ic-shield" fill="none" stroke="#ffb020" stroke-width="2.8" stroke-linejoin="round">
+      <path d="M20,4 L34,10 V20 C34,30 20,36 20,36 C20,36 6,30 6,20 V10 Z"/>
+      <line x1="20" y1="12" x2="20" y2="21" stroke-linecap="round"/>
+      <circle cx="20" cy="27" r="1.6" fill="#ffb020" stroke="none"/>
+    </g>
+    <g id="ic-chip" fill="none" stroke="#9fb0c3" stroke-width="2.2">
+      <rect x="11" y="11" width="18" height="18" rx="2.5"/>
+      <rect x="17" y="17" width="6" height="6" fill="#9fb0c3" stroke="none"/>
+      <line x1="16" y1="11" x2="16" y2="6"/><line x1="24" y1="11" x2="24" y2="6"/>
+      <line x1="16" y1="29" x2="16" y2="34"/><line x1="24" y1="29" x2="24" y2="34"/>
+      <line x1="11" y1="16" x2="6" y2="16"/><line x1="11" y1="24" x2="6" y2="24"/>
+      <line x1="29" y1="16" x2="34" y2="16"/><line x1="29" y1="24" x2="34" y2="24"/>
+    </g>
+  </defs>
+
+  <!-- ============ canvas ============ -->
+  <rect width="1920" height="1080" fill="#0a0e14"/>
+  <rect width="1920" height="1080" fill="url(#grid)"/>
+
+  <!-- ============ title ============ -->
+  <text x="48" y="52" font-size="30" font-weight="700" fill="#e6edf3">STADO<tspan fill="#22e3c4">×QWEN</tspan><tspan font-weight="400" fill="#9fb0c3" font-size="24">  —  voice-commanded drone fleet</tspan></text>
+  <text x="1872" y="46" text-anchor="end" font-size="14" fill="#6b7a8e" font-family="Menlo,Consolas,monospace">stado.sfautonomy.com</text>
+  <text x="1872" y="66" text-anchor="end" font-size="12" fill="#6b7a8e" font-family="Menlo,Consolas,monospace">EdgeAgent track</text>
+  <text x="48" y="82" font-size="15" fill="#9fb0c3">Reflexes live on the aircraft. Language, vision and orchestration live on Qwen Cloud. Deterministic safety gates sit between them.</text>
+
+  <!-- ============ CLOUD column ============ -->
+  <rect x="48" y="104" width="564" height="888" rx="14" fill="#0d1420" stroke="#1c2940" stroke-width="1.5"/>
+  <use href="#ic-cloud" transform="translate(70,120) scale(0.78)"/>
+  <text x="112" y="144" font-size="19" font-weight="700" fill="#e6edf3" letter-spacing="1">ALIBABA CLOUD</text>
+  <rect x="382" y="122" width="210" height="26" rx="13" fill="#141e2e" stroke="#263447"/>
+  <text x="487" y="139" text-anchor="middle" font-size="11.5" fill="#9fb0c3" font-family="Menlo,Consolas,monospace">ap-southeast-1 · Singapore</text>
+
+  <!-- Model Studio -->
+  <rect x="68" y="170" width="524" height="446" rx="10" fill="#111a29" stroke="#24344b"/>
+  <text x="88" y="198" font-size="13" font-weight="700" fill="#9fb0c3" letter-spacing="1.5">MODEL STUDIO — QWEN SERVING</text>
+
+  <!-- omni card -->
+  <rect x="88" y="216" width="484" height="124" rx="8" fill="#15202f" stroke="#2b3d55"/>
+  <rect x="88" y="216" width="5" height="124" rx="2.5" fill="#22e3c4"/>
+  <text x="110" y="244" font-size="16.5" font-weight="700" fill="#e6edf3" font-family="Menlo,Consolas,monospace">qwen3.5-omni-plus-realtime</text>
+  <rect x="452" y="226" width="108" height="22" rx="11" fill="#0f3a34" stroke="#22e3c4"/>
+  <text x="506" y="241" text-anchor="middle" font-size="11" font-weight="700" fill="#22e3c4">VOICE AGENT</text>
+  <text x="110" y="272" font-size="12.8" fill="#9fb0c3">native audio in → reasoning → native audio out — no ASR stage</text>
+  <text x="110" y="294" font-size="12.8" fill="#9fb0c3">38 flight tools registered via session.update</text>
+  <text x="110" y="316" font-size="12.8" fill="#9fb0c3">manual PTT turns (turn_detection: null) · barge-in cancel</text>
+
+  <!-- vision card -->
+  <rect x="88" y="356" width="484" height="116" rx="8" fill="#15202f" stroke="#2b3d55"/>
+  <rect x="88" y="356" width="5" height="116" rx="2.5" fill="#17a08d"/>
+  <text x="110" y="384" font-size="16" font-weight="700" fill="#e6edf3" font-family="Menlo,Consolas,monospace">qwen3.7-plus</text>
+  <rect x="480" y="366" width="80" height="22" rx="11" fill="#0f3a34" stroke="#17a08d"/>
+  <text x="520" y="381" text-anchor="middle" font-size="11" font-weight="700" fill="#22e3c4">VISION</text>
+  <text x="110" y="410" font-size="12.8" fill="#9fb0c3">open-vocabulary target grounding — seeds the onboard tracker</text>
+  <text x="110" y="432" font-size="12.8" fill="#9fb0c3">describe_view scene reports · license-plate reads</text>
+  <text x="110" y="454" font-size="12.8" fill="#9fb0c3">satellite-tile parcel detection for the survey planner</text>
+
+  <!-- max card -->
+  <rect x="88" y="488" width="484" height="108" rx="8" fill="#15202f" stroke="#2b3d55"/>
+  <rect x="88" y="488" width="5" height="108" rx="2.5" fill="#17a08d"/>
+  <text x="110" y="516" font-size="16" font-weight="700" fill="#e6edf3" font-family="Menlo,Consolas,monospace">qwen3.7-max</text>
+  <rect x="456" y="498" width="104" height="22" rx="11" fill="#0f3a34" stroke="#17a08d"/>
+  <text x="508" y="513" text-anchor="middle" font-size="11" font-weight="700" fill="#22e3c4">REASONING</text>
+  <text x="110" y="542" font-size="12.8" fill="#9fb0c3">post-flight mission reports: recorder stats, mode timeline,</text>
+  <text x="110" y="564" font-size="12.8" fill="#9fb0c3">agent-action timeline → operator-grade summary</text>
+
+  <!-- ECS box -->
+  <rect x="68" y="648" width="524" height="318" rx="10" fill="#111a29" stroke="#24344b"/>
+  <text x="88" y="676" font-size="13" font-weight="700" fill="#9fb0c3" letter-spacing="1.5">ECS INSTANCE — PUBLIC DEMO HOST</text>
+  <rect x="88" y="694" width="484" height="38" rx="8" fill="#15202f" stroke="#2b3d55"/>
+  <text x="108" y="718" font-size="13" fill="#cdd9e5">Caddy sidecar — automatic HTTPS, Let&#8217;s Encrypt <tspan font-family="Menlo,Consolas,monospace" fill="#9fb0c3">:443</tspan></text>
+  <rect x="88" y="744" width="484" height="38" rx="8" fill="#15202f" stroke="#2b3d55"/>
+  <text x="108" y="768" font-size="13" fill="#cdd9e5">nginx <tspan font-family="Menlo,Consolas,monospace" fill="#9fb0c3">:8080</tspan> — SPA · /api · /ws reverse proxy</text>
+  <rect x="88" y="794" width="484" height="38" rx="8" fill="#15202f" stroke="#2b3d55"/>
+  <text x="108" y="818" font-size="13" fill="#cdd9e5">one container: GCS backend + dual PX4 SITL + Gazebo</text>
+  <text x="88" y="866" font-size="12.5" fill="#6b7a8e">The browser talks HTTPS / WSS straight to this box. In the public</text>
+  <text x="88" y="886" font-size="12.5" fill="#6b7a8e">demo, the whole GROUND column and the simulated EDGE column</text>
+  <text x="88" y="906" font-size="12.5" fill="#6b7a8e">(dashed, far right) run inside this one container —</text>
+  <text x="88" y="926" font-size="12.5" fill="#6b7a8e">the same field-flown code, unchanged.</text>
+
+  <!-- ============ GROUND column ============ -->
+  <rect x="676" y="104" width="568" height="888" rx="14" fill="#0d1420" stroke="#1c2940" stroke-width="1.5"/>
+  <use href="#ic-headset" transform="translate(700,120) scale(0.72)"/>
+  <text x="740" y="144" font-size="19" font-weight="700" fill="#e6edf3" letter-spacing="1">GROUND — OPERATOR</text>
+  <rect x="1022" y="122" width="202" height="26" rx="13" fill="#141e2e" stroke="#263447"/>
+  <text x="1123" y="139" text-anchor="middle" font-size="11.5" fill="#9fb0c3" font-family="Menlo,Consolas,monospace">browser + STRATO·GCS</text>
+
+  <!-- browser box -->
+  <rect x="696" y="170" width="528" height="300" rx="10" fill="#111a29" stroke="#24344b"/>
+  <text x="716" y="198" font-size="13" font-weight="700" fill="#9fb0c3" letter-spacing="1.5">BROWSER — REACT GCS</text>
+  <rect x="716" y="216" width="488" height="96" rx="8" fill="#15202f" stroke="#2b3d55"/>
+  <text x="736" y="244" font-size="13.5" fill="#cdd9e5">live tactical map · dual drone HUDs · dual video feeds</text>
+  <text x="736" y="268" font-size="13.5" fill="#cdd9e5">survey previews · conversation log · Ready-for-Flight pill</text>
+  <text x="736" y="294" font-size="12.3" fill="#d69420">a human arms Ready-for-Flight here — operator stays in the loop</text>
+
+  <!-- mic node -->
+  <rect x="716" y="336" width="234" height="104" rx="8" fill="#15202f" stroke="#22e3c4" stroke-width="1.5"/>
+  <circle cx="740" cy="362" r="12" fill="#22e3c4"/>
+  <text x="740" y="367" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0a0e14">1</text>
+  <text x="760" y="367" font-size="13.5" font-weight="700" fill="#e6edf3">PUSH-TO-TALK</text>
+  <use href="#ic-mic" transform="translate(906,344) scale(0.62)"/>
+  <text x="736" y="396" font-size="12.3" fill="#9fb0c3">hold: stream mic PCM16 @ 16 kHz</text>
+  <text x="736" y="416" font-size="12.3" fill="#9fb0c3">release: commit + respond</text>
+
+  <!-- speaker node -->
+  <rect x="970" y="336" width="234" height="104" rx="8" fill="#15202f" stroke="#22e3c4" stroke-width="1.5"/>
+  <circle cx="994" cy="362" r="12" fill="#22e3c4"/>
+  <text x="994" y="367" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0a0e14">7</text>
+  <text x="1014" y="367" font-size="13.5" font-weight="700" fill="#e6edf3">SPOKEN OUTCOME</text>
+  <use href="#ic-speaker" transform="translate(1160,344) scale(0.62)"/>
+  <text x="990" y="396" font-size="12.3" fill="#9fb0c3">reply audio PCM16 @ 24 kHz</text>
+  <text x="990" y="416" font-size="12.3" fill="#9fb0c3">streamed audio deltas</text>
+
+  <!-- backend box -->
+  <rect x="696" y="502" width="528" height="468" rx="10" fill="#111a29" stroke="#24344b"/>
+  <text x="716" y="530" font-size="13" font-weight="700" fill="#9fb0c3" letter-spacing="1.5">STRATO·GCS BACKEND</text>
+
+  <rect x="716" y="548" width="448" height="72" rx="8" fill="#15202f" stroke="#2b3d55"/>
+  <text x="736" y="574" font-size="14" font-weight="700" fill="#cdd9e5">/ws/voice bridge — <tspan font-family="Menlo,Consolas,monospace" font-weight="400">voice_qwen.py</tspan></text>
+  <text x="736" y="598" font-size="12.5" fill="#9fb0c3">session mgmt · injects [SYSTEM] events → proactive speech</text>
+
+  <rect x="716" y="640" width="448" height="64" rx="8" fill="#15202f" stroke="#2b3d55"/>
+  <text x="736" y="666" font-size="14" font-weight="700" fill="#cdd9e5">dispatch() — one tool surface</text>
+  <text x="736" y="688" font-size="12.5" fill="#9fb0c3">the same 38 tools serve voice, REST and the field system</text>
+
+  <!-- safety interlocks -->
+  <rect x="716" y="724" width="448" height="136" rx="8" fill="#1f180a" stroke="#ffb020" stroke-width="1.6"/>
+  <circle cx="740" cy="750" r="12" fill="#ffb020"/>
+  <text x="740" y="755" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0a0e14">5</text>
+  <text x="760" y="755" font-size="13.5" font-weight="700" fill="#ffb020" letter-spacing="0.5">DETERMINISTIC SAFETY INTERLOCKS</text>
+  <use href="#ic-shield" transform="translate(1116,730) scale(0.62)"/>
+  <text x="740" y="784" font-size="12.4" fill="#cdd9e5"><tspan fill="#ffb020">▪</tspan> Ready-for-Flight — per-vehicle, human-armed launch gate</text>
+  <text x="740" y="808" font-size="12.4" fill="#cdd9e5"><tspan fill="#ffb020">▪</tspan> max-alt ceiling — refuse, never clamp · spoken override</text>
+  <text x="740" y="832" font-size="12.4" fill="#cdd9e5"><tspan fill="#ffb020">▪</tspan> home-alt gate — no takeoff on bad EKF / home altitude</text>
+
+  <rect x="716" y="880" width="448" height="70" rx="8" fill="#15202f" stroke="#2b3d55"/>
+  <text x="736" y="906" font-size="14" font-weight="700" fill="#cdd9e5">MAVLink registry</text>
+  <text x="736" y="928" font-size="12.5" fill="#9fb0c3">per-vehicle links · sysid routing · telemetry ingest @ 4 Hz</text>
+  <text x="716" y="964" font-size="12" fill="#6b7a8e">FastAPI, field-flown — the same backend flies the physical fleet</text>
+
+  <!-- ============ EDGE column ============ -->
+  <rect x="1308" y="104" width="564" height="888" rx="14" fill="#0d1420" stroke="#1c2940" stroke-width="1.5"/>
+  <use href="#ic-quad" transform="translate(1330,120) scale(0.72)"/>
+  <text x="1372" y="144" font-size="19" font-weight="700" fill="#e6edf3" letter-spacing="1">EDGE — AIRCRAFT</text>
+  <rect x="1668" y="122" width="184" height="26" rx="13" fill="#141e2e" stroke="#263447"/>
+  <text x="1760" y="139" text-anchor="middle" font-size="11.5" fill="#9fb0c3" font-family="Menlo,Consolas,monospace">reflexes stay onboard</text>
+
+  <!-- Overwatch -->
+  <rect x="1328" y="170" width="524" height="226" rx="10" fill="#111a29" stroke="#24344b"/>
+  <use href="#ic-hexa" transform="translate(1344,176) scale(0.62)"/>
+  <text x="1380" y="196" font-size="15" font-weight="700" fill="#e6edf3">OVERWATCH — hexacopter</text>
+  <text x="1832" y="196" text-anchor="end" font-size="11" fill="#6b7a8e" font-family="Menlo,Consolas,monospace">sysid 1</text>
+  <rect x="1348" y="212" width="484" height="56" rx="8" fill="#15202f" stroke="#2b3d55"/>
+  <text x="1368" y="234" font-size="13.5" font-weight="700" fill="#cdd9e5">PX4 flight controller — Pixhawk</text>
+  <text x="1368" y="256" font-size="12" fill="#9fb0c3">modes · EKF · mixing — flies itself; the GCS sends intents</text>
+  <rect x="1348" y="282" width="484" height="56" rx="8" fill="#15202f" stroke="#2b3d55"/>
+  <text x="1368" y="304" font-size="13.5" font-weight="700" fill="#cdd9e5">SIYI gimbal camera</text>
+  <text x="1368" y="326" font-size="12" fill="#9fb0c3">RTSP video · gimbal point / tilt / zoom</text>
+  <text x="1348" y="372" font-size="12" fill="#6b7a8e">datalink: SIYI smart controller — MAVLink + video share one link</text>
+
+  <!-- Outrider -->
+  <rect x="1328" y="426" width="524" height="360" rx="10" fill="#111a29" stroke="#24344b"/>
+  <use href="#ic-quad" transform="translate(1344,432) scale(0.62)"/>
+  <text x="1380" y="452" font-size="15" font-weight="700" fill="#e6edf3">OUTRIDER — quadcopter</text>
+  <text x="1832" y="452" text-anchor="end" font-size="11" fill="#6b7a8e" font-family="Menlo,Consolas,monospace">sysid 2</text>
+
+  <rect x="1348" y="468" width="484" height="224" rx="8" fill="#0f1826" stroke="#2b3d55"/>
+  <use href="#ic-chip" transform="translate(1360,474) scale(0.55)"/>
+  <text x="1388" y="492" font-size="12.5" font-weight="700" fill="#9fb0c3" letter-spacing="1">JETSON ORIN — EDGE COMPUTE</text>
+  <rect x="1368" y="504" width="444" height="52" rx="7" fill="#15202f" stroke="#2b3d55"/>
+  <text x="1386" y="525" font-size="13" font-weight="700" fill="#cdd9e5">VIO — OAK-D stereo</text>
+  <text x="1386" y="546" font-size="11.8" fill="#9fb0c3">GPS-denied state estimation, fused into PX4 EKF</text>
+  <rect x="1368" y="566" width="444" height="52" rx="7" fill="#15202f" stroke="#2b3d55"/>
+  <text x="1386" y="587" font-size="13" font-weight="700" fill="#cdd9e5">onboard target tracker</text>
+  <text x="1386" y="608" font-size="11.8" fill="#9fb0c3">follows targets through link dropouts — no cloud in the loop</text>
+  <rect x="1368" y="628" width="444" height="52" rx="7" fill="#15202f" stroke="#2b3d55"/>
+  <text x="1386" y="649" font-size="13" font-weight="700" fill="#cdd9e5">uXRCE-DDS ↔ MAVLink bridge</text>
+  <text x="1386" y="670" font-size="11.8" fill="#9fb0c3">GCS WiFi link ↔ PX4 topics</text>
+
+  <rect x="1348" y="712" width="484" height="52" rx="8" fill="#15202f" stroke="#2b3d55"/>
+  <text x="1368" y="733" font-size="13.5" font-weight="700" fill="#cdd9e5">Pixhawk — PX4</text>
+  <text x="1368" y="754" font-size="12" fill="#9fb0c3">flight control · failsafes stay authoritative onboard</text>
+  <path d="M1590,692 L1590,712" stroke="#17a08d" stroke-width="2.2" marker-end="url(#aTealDim)"/>
+  <text x="1600" y="706" font-size="10.5" fill="#6b7a8e" font-family="Menlo,Consolas,monospace">DDS</text>
+
+  <!-- sim/real boundary -->
+  <line x1="1328" y1="812" x2="1852" y2="812" stroke="#ffb020" stroke-width="1.6" stroke-dasharray="8 6"/>
+  <rect x="1420" y="800" width="340" height="24" rx="12" fill="#0a0e14" stroke="#ffb020"/>
+  <text x="1590" y="816" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffb020" letter-spacing="1">SIM ↔ REAL — INTERCHANGEABLE AT THIS LINE</text>
+
+  <rect x="1328" y="836" width="524" height="130" rx="10" fill="#171204" stroke="#ffb020" stroke-width="1.4" stroke-dasharray="7 5"/>
+  <text x="1348" y="862" font-size="13" font-weight="700" fill="#ffb020">DEMO MODE — simulated fleet</text>
+  <rect x="1762" y="846" width="70" height="22" rx="11" fill="#0a0e14" stroke="#ffb020"/>
+  <text x="1797" y="861" text-anchor="middle" font-size="11" font-weight="700" fill="#ffb020">SITL</text>
+  <text x="1348" y="888" font-size="12.3" fill="#cdd9e5">dual PX4 SITL + Gazebo — one gz world per drone, own GZ_PARTITION</text>
+  <text x="1348" y="908" font-size="12.3" fill="#cdd9e5">lives inside the ECS container · same MAVLink, same tools, same gates</text>
+  <text x="1348" y="928" font-size="12.3" fill="#cdd9e5">everything outside this column is byte-identical in the field</text>
+
+  <!-- ============ supporting flows (draw under main path) ============ -->
+  <!-- dispatch -> vision + report (shared lane) -->
+  <path d="M716,660 H602 V398 H596" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#aSlate)"/>
+  <path d="M602,526 H596" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#aSlate)"/>
+  <text x="712" y="676" text-anchor="end" font-size="10" fill="#64748b" font-family="Menlo,Consolas,monospace">frames · flight log</text>
+  <!-- video return -->
+  <path d="M1348,310 H1256 V264 H1208" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#aSlate)"/>
+  <text x="1248" y="296" font-size="10.5" fill="#64748b" font-family="Menlo,Consolas,monospace" transform="rotate(-90 1248 296)" text-anchor="middle">RTSP → go2rtc → WebRTC</text>
+  <!-- telemetry lane -->
+  <path d="M1164,915 H1214 V300 H1208" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#aSlate)"/>
+  <text x="1200" y="615" font-size="10.5" fill="#64748b" font-family="Menlo,Consolas,monospace" transform="rotate(-90 1200 615)" text-anchor="middle">telemetry → WS hub → map · HUD</text>
+
+  <!-- ============ MAIN COMMAND PATH ============ -->
+  <!-- 2: mic -> bridge -->
+  <path d="M910,440 V548" fill="none" stroke="#22e3c4" stroke-width="4" marker-end="url(#aTeal)"/>
+  <circle cx="910" cy="478" r="12" fill="#22e3c4"/>
+  <text x="910" y="483" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0a0e14">2</text>
+  <text x="930" y="483" font-size="12" fill="#22e3c4" font-family="Menlo,Consolas,monospace">WebSocket /ws/voice</text>
+  <text x="930" y="500" font-size="11" fill="#17a08d" font-family="Menlo,Consolas,monospace">binary PCM frames</text>
+  <!-- reply: bridge -> speaker -->
+  <path d="M1087,548 V440" fill="none" stroke="#22e3c4" stroke-width="2.5" marker-end="url(#aTeal)"/>
+  <!-- 3: bridge -> omni (audio up) -->
+  <path d="M716,560 H668 V240 H596" fill="none" stroke="#22e3c4" stroke-width="4" marker-end="url(#aTeal)"/>
+  <circle cx="668" cy="286" r="12" fill="#22e3c4"/>
+  <text x="668" y="291" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0a0e14">3</text>
+  <text x="686" y="420" font-size="11.5" fill="#22e3c4" font-family="Menlo,Consolas,monospace" transform="rotate(-90 686 420)" text-anchor="middle">wss Qwen Realtime — PCM16 up · commit on release</text>
+  <!-- 4: omni -> bridge (tool call + reply audio) -->
+  <path d="M596,290 H652 V585 H716" fill="none" stroke="#22e3c4" stroke-width="4" marker-end="url(#aTeal)"/>
+  <circle cx="652" cy="472" r="12" fill="#22e3c4"/>
+  <text x="652" y="477" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0a0e14">4</text>
+  <text x="634" y="430" font-size="11.5" fill="#22e3c4" font-family="Menlo,Consolas,monospace" transform="rotate(-90 634 430)" text-anchor="middle">tool_call args · reply audio deltas</text>
+  <!-- bridge -> dispatch -> gates -> mavlink (vertical spine) -->
+  <path d="M940,620 V640" fill="none" stroke="#22e3c4" stroke-width="4" marker-end="url(#aTeal)"/>
+  <path d="M940,704 V724" fill="none" stroke="#22e3c4" stroke-width="4" marker-end="url(#aTeal)"/>
+  <path d="M940,860 V880" fill="none" stroke="#22e3c4" stroke-width="4" marker-end="url(#aTeal)"/>
+  <!-- 6a: mavlink -> overwatch -->
+  <path d="M1164,892 H1274 V240 H1328" fill="none" stroke="#22e3c4" stroke-width="4" marker-end="url(#aTeal)"/>
+  <circle cx="1274" cy="330" r="12" fill="#22e3c4"/>
+  <text x="1274" y="335" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0a0e14">6</text>
+  <text x="1262" y="560" font-size="11.5" fill="#22e3c4" font-family="Menlo,Consolas,monospace" transform="rotate(-90 1262 560)" text-anchor="middle">MAVLink — SIYI datalink</text>
+  <!-- 6b: mavlink -> outrider -->
+  <path d="M1164,912 H1296 V654 H1368" fill="none" stroke="#22e3c4" stroke-width="4" marker-end="url(#aTeal)"/>
+  <circle cx="1296" cy="700" r="12" fill="#22e3c4"/>
+  <text x="1296" y="705" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0a0e14">6</text>
+  <text x="1310" y="778" font-size="11.5" fill="#22e3c4" font-family="Menlo,Consolas,monospace" transform="rotate(-90 1310 778)" text-anchor="middle">MAVLink over WiFi · UDP</text>
+  <!-- 6c: mavlink -> sim (demo) -->
+  <path d="M1164,932 H1256 V901 H1328" fill="none" stroke="#22e3c4" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#aTeal)"/>
+  <text x="1170" y="950" font-size="10.5" fill="#17a08d" font-family="Menlo,Consolas,monospace">demo: UDP 14540 / 14541</text>
+
+  <!-- ============ legend ============ -->
+  <line x1="48" y1="1040" x2="104" y2="1040" stroke="#22e3c4" stroke-width="4" marker-end="url(#aTeal)"/>
+  <text x="118" y="1045" font-size="12.5" fill="#9fb0c3">voice command path — ① PTT … ⑦ spoken outcome</text>
+  <line x1="470" y1="1040" x2="522" y2="1040" stroke="#64748b" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#aSlate)"/>
+  <text x="534" y="1045" font-size="12.5" fill="#9fb0c3">telemetry · video (supporting)</text>
+  <rect x="756" y="1032" width="15" height="15" rx="3" fill="#1f180a" stroke="#ffb020" stroke-width="1.5"/>
+  <text x="782" y="1045" font-size="12.5" fill="#9fb0c3">deterministic safety interlock</text>
+  <line x1="990" y1="1040" x2="1042" y2="1040" stroke="#ffb020" stroke-width="1.6" stroke-dasharray="8 6"/>
+  <text x="1054" y="1045" font-size="12.5" fill="#9fb0c3">sim ↔ real boundary (demo)</text>
+  <text x="1872" y="1045" text-anchor="end" font-size="11.5" fill="#6b7a8e" font-family="Menlo,Consolas,monospace">Qwen Cloud · Alibaba ECS · PX4 · MAVLink · WebRTC</text>
+</svg>
