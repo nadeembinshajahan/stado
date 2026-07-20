@@ -50,9 +50,39 @@ docker run -d --name "$NAME" \
 if [ -n "${DOMAIN:-}" ]; then
     echo "── caddy (TLS for $DOMAIN) ──────────────────────────────────────────"
     mkdir -p /var/stado/caddy
+
+    # Optional public-demo basic auth. When DEMO_USER and DEMO_PASSWORD are set
+    # (typically in .env), Caddy 401s any unauthenticated request — protects
+    # the running demo from bot scans + accidental Qwen-credit burn. Judges
+    # get the credentials via the Devpost "Testing Instructions" field.
+    DEMO_USER="${DEMO_USER:-$(envval DEMO_USER)}"
+    DEMO_PASSWORD="${DEMO_PASSWORD:-$(envval DEMO_PASSWORD)}"
+    AUTH_BLOCK=""
+    if [ -n "$DEMO_USER" ] && [ -n "$DEMO_PASSWORD" ]; then
+        # Bootstrap: start Caddy without auth first so we can call its
+        # hash-password binary to bcrypt the password. Then rewrite + reload.
+        docker rm -f caddy 2>/dev/null || true
+        docker run -d --name caddy --network "$NET" --restart unless-stopped \
+            -p 80:80 -p 443:443 \
+            -v /var/stado/caddy/Caddyfile:/etc/caddy/Caddyfile:ro \
+            -v caddy_data:/data caddy:2-alpine >/dev/null
+        # Wait for caddy container to be responsive to `exec`.
+        for _ in $(seq 1 10); do
+            docker exec caddy caddy version >/dev/null 2>&1 && break
+            sleep 1
+        done
+        HASH=$(docker exec caddy caddy hash-password --plaintext "$DEMO_PASSWORD" 2>/dev/null)
+        if [ -n "$HASH" ]; then
+            AUTH_BLOCK=$'    basic_auth {\n        '"$DEMO_USER $HASH"$'\n    }\n'
+            echo "── basic auth enabled (user: $DEMO_USER) ──"
+        else
+            echo "!! Warning: could not hash DEMO_PASSWORD — deploying WITHOUT auth"
+        fi
+    fi
+
     cat > /var/stado/caddy/Caddyfile <<EOF
 $DOMAIN {
-    reverse_proxy $NAME:8080
+$AUTH_BLOCK    reverse_proxy $NAME:8080
 }
 EOF
     docker stop caddy 2>/dev/null || true
